@@ -1,0 +1,42 @@
+body {
+    padding-top: 5rem;
+}
+form#currencyConverter {
+    border: 1px solid #ccc;
+    padding: 40px;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+label.currency {
+    font-weight: 500;
+    vertical-align: text-bottom;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+div#info {
+    width: 100%;
+    background: #343a40;
+    color: #fff;
+    border: 1px solid #343a40;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    padding:10px;
+}
+
+span#currency-info-two {
+    float: right;
+    font-size: 16px;
+    font-weight: 600;
+    color: #f4ce42;
+}
+
+input#amount-one, input#amount-two {
+    margin-bottom: 10px;
+}
