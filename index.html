@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <link href="assets/css/main.css" rel="stylesheet">
@@ -18,28 +19,19 @@
 
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Currency Converter</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-        </ul>
-    </div>
-</nav>
-
 <main role="main" class="container">
 
    <div class="row justify-content-sm-center">
        <div class="col-sm-12 col-md-12 col-lg-8">
            <form id="currencyConverter">
+               <div class="c-header">
+                   <span><i class="fas fa-coins" style="font-size: 48px;"></i>Keep calm and convert</span>
+               </div>
                <div class="form-group row">
                    <div class="col-sm-12 col-md-12 col-lg-1">
                        <label id="amount-one-currency" class="currency"></label>
                    </div>
-                   <div class="col-sm-12 col-md-12 col-lg-5">
+                   <div class="col-sm-12 col-md-12 col-lg-5 currency">
                        <input type="number" min="0" class="form-control" id="amount-one" placeholder="">
                    </div>
                    <div class="col-sm-12 col-md-12 col-lg-6">
@@ -52,7 +44,7 @@
                    <div class="col-sm-12 col-md-12 col-lg-1">
                        <label id="amount-two-currency" class="currency"></label>
                    </div>
-                   <div class="col-sm-12 col-md-12 col-lg-5">
+                   <div class="col-sm-12 col-md-12 col-lg-5 currency">
                        <input type="number" min="0" class="form-control" id="amount-two" placeholder="">
                    </div>
                    <div class="col-sm-12 col-md-12 col-lg-6">

@@ -27,6 +27,25 @@ const descriptionTwo = document.getElementById('currency-info-two');
 //capture the values of the two select boxes before changed
 let a, b = '';
 
+//registering the service worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/currency-converter/sw.js', { scope: '/currency-converter/' }).then(function(reg) {
+
+        if(reg.installing) {
+            console.log('Service worker installing');
+        } else if(reg.waiting) {
+            console.log('Service worker installed');
+        } else if(reg.active) {
+            console.log('Service worker active');
+        }
+
+    }).catch(function(error) {
+        // registration failed
+        console.log('Registration failed with ' + error);
+    });
+}
+
+
 //whenever the value of amountOne changed this will trigger
 //get the exchange amount and set it to amountTwo
 amountOne.addEventListener('keyup', (e) => {
