@@ -1,7 +1,7 @@
 /**
  * Created by mikigv on 6/26/2018.
  */
-var staticCacheName = 'mikiasgv-v2';
+var staticCacheName = 'mikiasgv-v3';
 //dddddsdsd
 self.addEventListener('install', function(event) {
     event.waitUntil(
@@ -51,9 +51,7 @@ self.addEventListener('fetch', function(event){
 
     event.respondWith(
         caches.match(event.request).then(function(response){
-          if(response) return response;
-
-          return fetch(event.request);
+            return response || fetch(event.request);
         })
     );
 });

@@ -61,7 +61,14 @@ if ('serviceWorker' in navigator) {
         console.log('Registration failed with ' + error);
     });
 
-    navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
+    // Ensure refresh is only called once.
+    // This works around a bug in "force update on reload".
+    var refreshing;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        window.location.reload();
+        refreshing = true;
+    });
 }
 
 function updateReady(worker){
