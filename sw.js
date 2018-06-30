@@ -1,7 +1,7 @@
 /**
  * Created by mikigv on 6/26/2018.
  */
-var staticCacheName = 'currency-converter-v60';
+var staticCacheName = 'mikiasgv-v1';
 //dddddsdsd
 self.addEventListener('install', function(event) {
     event.waitUntil(
@@ -28,7 +28,7 @@ self.addEventListener('activate', function(event) {
         caches.keys().then(function(cacheNames) {
             return Promise.all(
                 cacheNames.filter(function(cacheName) {
-                    return cacheName.startsWith('currency-converter-') &&
+                    return cacheName.startsWith('mikiasgv-') &&
                         cacheName != staticCacheName;
                 }).map(function(cacheName) {
                     return caches.delete(cacheName);
