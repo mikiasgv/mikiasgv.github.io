@@ -3,6 +3,7 @@
  */
 
 class View {
+
     constructor(){
         this.init();
     }
@@ -12,14 +13,19 @@ class View {
     }
 
 
+
     printCurrencies(){
 
         //call the method will return a list with a promise
-        currencyAPI.getCurrencyList()
+        currencyAPI.getCurrenciesFromDB()
             .then(data => {
-                //console.log(data);
+                //console.log(data.currencyArr);
+                //const currencies = [];
                 //get the returned result to the deepest level
-                const currencies = data.currencies.results;
+                if(typeof data === 'object'){
+                    data = data.currencyArr;
+                }
+                //const currencies = data;
                 //get the first select component from the UI to populate it with the currency list
                 const select = document.getElementById('currency-one');
 
@@ -38,14 +44,14 @@ class View {
                 const descriptionTwo = document.getElementById('currency-info-two');
 
                 //Iterate through the returned list
-                Object.keys(currencies).forEach(function (currency) {
+                data.forEach((currency) => {
                     //console.log(cryptoCurrencies[currency]);
                     //create option element dynamically
                     const option = document.createElement('option');
                     //this will add a value to the created option like: USD, GPB, BIR...
-                    option.value = currencies[currency].id;
+                    option.value = currency.id;
                     //this will add a full name of the currency to the created option
-                    option.appendChild(document.createTextNode(currencies[currency].currencyName));
+                    option.appendChild(document.createTextNode(currency.currencyName));
                     //Finally append the created element to the select element
                     select.appendChild(option);
                     //Set USD the default currency for the select one
@@ -55,14 +61,14 @@ class View {
                 });
 
                 //Iterate through the returned list
-                Object.keys(currencies).forEach(function (currency) {
+                data.forEach((currency) => {
                     //console.log(cryptoCurrencies[currency]);
                     //create option element dynamically
                     const option = document.createElement('option');
                     //this will add a value to the created option like: USD, GPB, BIR...
-                    option.value = currencies[currency].id;
+                    option.value = currency.id;
                     //this will add a full name of the currency to the created option
-                    option.appendChild(document.createTextNode(currencies[currency].currencyName));
+                    option.appendChild(document.createTextNode(currency.currencyName));
                     //Finally append the created element to the select element
                     selectTwo.appendChild(option);
                     //Set EYR the def.ault currency for the select two
@@ -71,10 +77,13 @@ class View {
                     symbolTwo.innerText = 'EUR';
                 });
 
-                currencyAPI.queryAPI('USD', 'EUR')
+                currencyAPI.queryAPIFromDB('USD', 'EUR')
                     .then(data => {
-                        const finalResults = data.conversonResult.results;
-                        Object.values(finalResults).forEach(function (result) {
+                        if(typeof data === 'object'){
+                            data = data.exchangeArr;
+                        }
+
+                        data.forEach((result) => {
                             amountOne.value = 1;
                             amountTwo.value = (result.val).toFixed(2);
                             descriptionOne.innerText = `1 United States Dollar equals`;
@@ -84,5 +93,27 @@ class View {
 
             })
 
+    }
+
+    showUpdateUI(message){
+        let htmlTemplate = '';
+
+        htmlTemplate += `
+                <div class="card update-indicator" style="width: 18rem;">
+                   <div class="card-body">
+                       <h5 class="card-title">${message}</h5>
+                       <button id="btn-refresh" class="btn btn-primary">Refresh</button>
+                       <button id="btn-cancel" class="btn btn-primary">Cancel</button>
+                   </div>
+               </div>
+            `;
+
+        const updateMessage = document.querySelector('#update-message');
+
+        updateMessage.innerHTML = htmlTemplate;
+    }
+
+    fixToTwo(ex1){
+        return ex1.toFixed(2);
     }
 }

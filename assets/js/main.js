@@ -31,18 +31,58 @@ let a, b = '';
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/currency-converter/sw.js', { scope: '/currency-converter/' }).then(function(reg) {
 
-        if(reg.installing) {
-            console.log('Service worker installing');
-        } else if(reg.waiting) {
-            console.log('Service worker installed');
-        } else if(reg.active) {
-            console.log('Service worker active');
+        if(reg.waiting) {
+            updateReady(reg.waiting);
+            return;
         }
 
-    }).catch(function(error) {
+        if(reg.installing) {
+            console.log('Service worker installing')
+            reg.installing.addEventListener('statechange', () => {
+                if(this.state == 'installed'){
+                    updateReady(this);
+                    return;
+                }
+            });
+        }
+
+        reg.addEventListener('updatefound', () => {
+            reg.installing.addEventListener('statechange', function(){
+                if(this.state == 'installed'){
+                    updateReady(this);
+                    return;
+                }
+            });
+        })
+
+
+    }).catch((error) =>  {
         // registration failed
         console.log('Registration failed with ' + error);
     });
+
+    navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
+}
+
+function updateReady(worker){
+
+    view.showUpdateUI('New version available');
+
+    const updateMessage = document.querySelector('#update-message');
+
+    updateMessage.addEventListener('click', (e) => {
+        if(e.target && e.target.id== 'btn-refresh'){
+
+            worker.postMessage({action: 'skipWaiting'});
+
+
+        }else if(e.target && e.target.id== 'btn-cancel'){
+            setTimeout(() => {
+                document.querySelector('#update-message div').remove();
+            }, 1000);
+        }
+
+    })
 }
 
 
@@ -52,11 +92,13 @@ amountOne.addEventListener('keyup', (e) => {
     e.preventDefault();
 
     if(currencyAPI.isNumberKey(e)){
-        currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value)
+        currencyAPI.queryAPIFromDB(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value)
             .then(data => {
-                const finalResults = data.conversonResult.results;
-                Object.values(finalResults).forEach(function (result) {
-                    amountTwo.value = this.fixToTwo(result.val * (amountOne.value));
+                if(typeof data === 'object'){
+                    data = data.exchangeArr;
+                }
+                data.forEach(function (result) {
+                    amountTwo.value = view.fixToTwo(result.val * (amountOne.value));
                     descriptionOne.innerText = `${amountOne.value} ${select.options[select.selectedIndex].text} equals`;
                     descriptionTwo.innerText = `${amountTwo.value} ${selectTwo.options[selectTwo.selectedIndex].text}`;
                 });
@@ -75,11 +117,13 @@ amountTwo.addEventListener('keyup', (e) => {
     e.preventDefault();
 
     if(currencyAPI.isNumberKey(e)){
-        currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value)
+        currencyAPI.queryAPIFromDB(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value)
             .then(data => {
-                const finalResults = data.conversonResult.results;
-                Object.values(finalResults).forEach(function (result) {
-                    amountOne.value = this.fixToTwo(result.val * (amountTwo.value));
+                if(typeof data === 'object'){
+                    data = data.exchangeArr;
+                }
+                data.forEach(function (result) {
+                    amountOne.value = view.fixToTwo(result.val * (amountTwo.value));
                     descriptionOne.innerText = `${amountTwo.value} ${selectTwo.options[selectTwo.selectedIndex].text} equals`;
                     descriptionTwo.innerText = `${amountOne.value} ${select.options[select.selectedIndex].text}`;
                 });
@@ -128,12 +172,15 @@ select.addEventListener('change', (e) => {
     //this will remove the focus
     select.blur();
     symbolOne.innerText = select.options[select.selectedIndex].value;
+    symbolTwo.innerText = selectTwo.options[selectTwo.selectedIndex].value;
 
-    currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value)
+    currencyAPI.queryAPIFromDB(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value)
         .then(data => {
-            const finalResults = data.conversonResult.results;
-            Object.values(finalResults).forEach(function (result) {
-                amountTwo.value = this.fixToTwo(result.val * (amountOne.value));
+            if(typeof data === 'object'){
+                data = data.exchangeArr;
+            }
+            data.forEach(function (result) {
+                amountTwo.value = view.fixToTwo(result.val * (amountOne.value));
                 descriptionOne.innerText = `${amountOne.value} ${select.options[select.selectedIndex].text} equals`;
                 descriptionTwo.innerText = `${amountTwo.value} ${selectTwo.options[selectTwo.selectedIndex].text}`;
             });
@@ -166,19 +213,21 @@ selectTwo.addEventListener('change', (e) => {
     }
 
     selectTwo.blur();
+    symbolOne.innerText = select.options[select.selectedIndex].value;
     symbolTwo.innerText = selectTwo.options[selectTwo.selectedIndex].value;
 
-    currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value)
+    currencyAPI.queryAPIFromDB(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value)
         .then(data => {
-            const finalResults = data.conversonResult.results;
-            Object.values(finalResults).forEach(function (result) {
-                amountOne.value = this.fixToTwo(result.val * (amountTwo.value));
+            if(typeof data === 'object'){
+                data = data.exchangeArr;
+            }
+            data.forEach(function (result) {
+                amountOne.value = view.fixToTwo(result.val * (amountTwo.value));
                 descriptionOne.innerText = `${amountTwo.value} ${selectTwo.options[selectTwo.selectedIndex].text} equals`;
                 descriptionTwo.innerText = `${amountOne.value} ${select.options[select.selectedIndex].text}`;
             });
         });
 });
-
 
 function clearField(){
     amountOne.value = 0;
@@ -187,9 +236,9 @@ function clearField(){
     descriptionTwo.innerText = '';
 }
 
-function fixToTwo(ex1){
-    return ex1.toFixed(2);
-}
+
+
+
 
 
 
