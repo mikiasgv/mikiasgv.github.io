@@ -1,7 +1,7 @@
 /**
  * Created by mikigv on 6/26/2018.
  */
-var staticCacheName = 'mikiasgv-v1';
+var staticCacheName = 'mikiasgv-v2';
 //dddddsdsd
 self.addEventListener('install', function(event) {
     event.waitUntil(
