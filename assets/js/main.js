@@ -29,7 +29,7 @@ let a, b = '';
 
 //registering the service worker
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/currency-converter/sw.js', { scope: '/currency-converter/' }).then(function(reg) {
+    navigator.serviceWorker.register('/mikiasgv.github.io/sw.js', { scope: '/mikiasgv.github.io/' }).then(function(reg) {
 
         if(reg.waiting) {
             updateReady(reg.waiting);
