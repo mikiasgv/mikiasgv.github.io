@@ -1,8 +1,8 @@
 /**
  * Created by mikigv on 6/26/2018.
  */
-var staticCacheName = 'currency-converter-v2';
-//dddd
+var staticCacheName = 'currency-converter-v60';
+//dddddsdsd
 self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(staticCacheName).then(function(cache) {
