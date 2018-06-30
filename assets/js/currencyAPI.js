@@ -45,30 +45,35 @@ class CurrencyAPI {
         const url = await fetch('https://free.currencyconverterapi.com/api/v5/currencies');
 
         //converting the list to json
-        const currencies = await url.json();
+        //const currencies = await url.json();
 
-        let currencyArr = [];
-        Object.values(currencies.results).forEach((currency) => {
-            currencyArr.push(currency);
-        });
-
-        //add currencies to the db
-        this.openDatabase().then((db) => {
-            if (!db) return;
-
-            const tx = db.transaction('currencies', 'readwrite');
-            const store = tx.objectStore('currencies');
+        if (url.ok) {
+            const currencies = await url.json();
+            let currencyArr = [];
             Object.values(currencies.results).forEach((currency) => {
-                store.put(currency);
+                currencyArr.push(currency);
             });
 
-        });
+            //add currencies to the db
+            this.openDatabase().then((db) => {
+                if (!db) return;
 
-        return {//return the concerted list
+                const tx = db.transaction('currencies', 'readwrite');
+                const store = tx.objectStore('currencies');
+                Object.values(currencies.results).forEach((currency) => {
+                    store.put(currency);
+                });
 
-            currencyArr
-        };
+            });
 
+            return {//return the concerted list
+
+                currencyArr
+            };
+
+        } else {
+            throw Error(url.statusText);
+        }
 
     }
 
@@ -81,7 +86,6 @@ class CurrencyAPI {
             checkArr.push(index.getAll());
 
             if(checkArr.length){
-                //console.log('form db');
                 return index.getAll();
             }
         });
@@ -95,34 +99,39 @@ class CurrencyAPI {
         const url = await fetch(`https://free.currencyconverterapi.com/api/v5/convert?q=${currency_one}_${currency_two},
         ${currency_two}_${currency_one}`);
 
-        //converting the list to json
-        const conversonResult = await url.json();
-
-        let exchangeArr = [];
-        Object.values(conversonResult.results).forEach((rate) => {
-            exchangeArr.push(rate);
-        });
-
-        //add currencies to the db
-        this.openDatabase().then((db) => {
-            if (!db) return;
-
-            const tx = db.transaction('rates', 'readwrite');
-            const store = tx.objectStore('rates');
+        if (url.ok) {
+            //converting the list to json
+            const conversonResult = await url.json();
+            let exchangeArr = [];
             Object.values(conversonResult.results).forEach((rate) => {
-                store.put(rate);
+                exchangeArr.push(rate);
             });
 
-        });
+            //add currencies to the db
+            this.openDatabase().then((db) => {
+                if (!db) return;
 
-        return {
-            exchangeArr
-        };
+                const tx = db.transaction('rates', 'readwrite');
+                const store = tx.objectStore('rates');
+                Object.values(conversonResult.results).forEach((rate) => {
+                    store.put(rate);
+                });
+
+            });
+
+            return {
+                exchangeArr
+            };
+
+        } else {
+            throw Error(url.statusText);
+        }
+
     }
 
     queryAPIFromDB(currency_one, currency_two){
         let checkArr = [];
-        this.openDatabase().then(function(db) {
+        this.openDatabase().then((db) => {
             const index = db.transaction('rates')
                 .objectStore('rates').index('rates');
 
