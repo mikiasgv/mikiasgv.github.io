@@ -223,15 +223,15 @@ selectTwo.addEventListener('change', (e) => {
     symbolOne.innerText = select.options[select.selectedIndex].value;
     symbolTwo.innerText = selectTwo.options[selectTwo.selectedIndex].value;
 
-    currencyAPI.queryAPIFromDB(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value)
+    currencyAPI.queryAPIFromDB(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value)
         .then(data => {
             if(typeof data === 'object'){
                 data = data.exchangeArr;
             }
             data.forEach(function (result) {
-                amountOne.value = view.fixToTwo(result.val * (amountTwo.value));
-                descriptionOne.innerText = `${amountTwo.value} ${selectTwo.options[selectTwo.selectedIndex].text} equals`;
-                descriptionTwo.innerText = `${amountOne.value} ${select.options[select.selectedIndex].text}`;
+                amountTwo.value = view.fixToTwo(result.val * (amountOne.value));
+                descriptionOne.innerText = `${amountOne.value} ${select.options[select.selectedIndex].text} equals`;
+                descriptionTwo.innerText = `${amountTwo.value} ${selectTwo.options[selectTwo.selectedIndex].text}`;
             });
         });
 });
