@@ -90,9 +90,9 @@ class CurrencyAPI {
                     selectTwo.options[selectTwo.selectedIndex].text="Euro";
                     symbolOne.innerText = "USD";
                     symbolTwo.innerText = 'EUR';
-
-                    this.queryAPI("USD", "EUR", "United States Dollar equals", "Euro", 1, "amountOne");
                 }
+
+                this.queryAPI("USD", "EUR", "United States Dollar equals", "Euro", 1, "amountOne");
 
             }).catch( error => {
                 console.log('No currency was found in the database: ');
@@ -137,9 +137,9 @@ class CurrencyAPI {
                 selectTwo.options[selectTwo.selectedIndex].text="Euro";
                 symbolOne.innerText = "USD";
                 symbolTwo.innerText = 'EUR';
-
-                this.queryAPI("USD", "EUR", "United States Dollar equals", "Euro", 1, "amountOne");
             });
+
+            this.queryAPI("USD", "EUR", "United States Dollar equals", "Euro", 1, "amountOne");
 
             this.addCurrenciesToDatabase(currencies);
 
