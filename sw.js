@@ -1,7 +1,7 @@
 /**
  * Created by mikigv on 6/26/2018.
  */
-var staticCacheName = 'mikiasgv-v6';
+var staticCacheName = 'curr-conv-v6';
 //dddddsdsd
 self.addEventListener('install', function(event) {
     event.waitUntil(
@@ -26,7 +26,7 @@ self.addEventListener('activate', function(event) {
         caches.keys().then(function(cacheNames) {
             return Promise.all(
                 cacheNames.filter(function(cacheName) {
-                    return cacheName.startsWith('mikiasgv-') &&
+                    return cacheName.startsWith('curr-conv-') &&
                         cacheName != staticCacheName;
                 }).map(function(cacheName) {
                     return caches.delete(cacheName);
