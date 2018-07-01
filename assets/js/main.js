@@ -192,7 +192,7 @@ selectTwo.addEventListener('change', (e) => {
     symbolOne.innerText = select.options[select.selectedIndex].value;
     symbolTwo.innerText = selectTwo.options[selectTwo.selectedIndex].value;
 
-    currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value,
+    currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value,
         select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.value, 'selectTwo');
 });
 

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e31869a-a5b8-4b24-abd8-becdd70aa51c" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/js/main.js" afterPath="$PROJECT_DIR$/assets/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sw.js" afterPath="$PROJECT_DIR$/sw.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,8 +38,8 @@
       <file leaf-file-name="currencyAPI.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/currencyAPI.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1222">
-              <caret line="141" column="95" lean-forward="false" selection-start-line="141" selection-start-column="95" selection-end-line="141" selection-end-column="95" />
+            <state relative-caret-position="-3536">
+              <caret line="14" column="31" lean-forward="true" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
               <folding>
                 <marker date="1530452027594" expanded="false" signature="12466:12479" ph="..." />
                 <marker date="1530452027594" expanded="true" signature="12480:12809" ph="..." />
@@ -51,8 +52,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="194" column="73" lean-forward="false" selection-start-line="194" selection-start-column="73" selection-end-line="194" selection-end-column="73" />
+            <state relative-caret-position="294">
+              <caret line="194" column="117" lean-forward="false" selection-start-line="194" selection-start-column="117" selection-end-line="194" selection-end-column="117" />
               <folding />
             </state>
           </provider>
@@ -68,8 +69,8 @@
       <list>
         <option value="$PROJECT_DIR$/assets/js/view.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/assets/js/main.js" />
         <option value="$PROJECT_DIR$/assets/js/currencyAPI.js" />
+        <option value="$PROJECT_DIR$/assets/js/main.js" />
         <option value="$PROJECT_DIR$/sw.js" />
       </list>
     </option>
@@ -284,12 +285,12 @@
       <workItem from="1530430063347" duration="1759000" />
       <workItem from="1530440795416" duration="336000" />
       <workItem from="1530443934733" duration="74000" />
-      <workItem from="1530447038498" duration="5019000" />
+      <workItem from="1530447038498" duration="5888000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15130000" />
+    <option name="totallyTimeSpent" value="15999000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -689,23 +690,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="194" column="73" lean-forward="false" selection-start-line="194" selection-start-column="73" selection-end-line="194" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/currencyAPI.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1222">
-          <caret line="141" column="95" lean-forward="false" selection-start-line="141" selection-start-column="95" selection-end-line="141" selection-end-column="95" />
+        <state relative-caret-position="-3536">
+          <caret line="14" column="31" lean-forward="true" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
           <folding>
             <marker date="1530452027594" expanded="false" signature="12466:12479" ph="..." />
             <marker date="1530452027594" expanded="true" signature="12480:12809" ph="..." />
             <marker date="1530452027594" expanded="true" signature="12523:12787" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="194" column="117" lean-forward="false" selection-start-line="194" selection-start-column="117" selection-end-line="194" selection-end-column="117" />
+          <folding />
         </state>
       </provider>
     </entry>
