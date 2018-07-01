@@ -29,7 +29,7 @@ let a, b = '';
 
 //registering the service worker
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/mikiasgv.github.io/sw.js', { scope: '/mikiasgv.github.io/' }).then(function(reg) {
+    navigator.serviceWorker.register('./sw.js').then(function(reg) {
 
         if(reg.waiting) {
             updateReady(reg.waiting);
