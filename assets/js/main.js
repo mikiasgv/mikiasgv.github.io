@@ -26,7 +26,7 @@ let a, b = '';
 
 //registering the service worker
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').then(function(reg) {
+    navigator.serviceWorker.register('./sw.js').then((reg) => {
 
         if(reg.waiting) {
             updateReady(reg.waiting);
@@ -95,7 +95,7 @@ function updateReady(worker){
 amountOne.addEventListener('keyup', (e) => {
     e.preventDefault();
 
-    if(currencyAPI.isNumberKey(e)){
+    if(currencyAPI.isNumberKey(amountOne.value)){
         currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value,
             select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.value, 'amountOne');
     }else if(amountOne < 0){
@@ -111,7 +111,7 @@ amountOne.addEventListener('keyup', (e) => {
 amountTwo.addEventListener('keyup', (e) => {
     e.preventDefault();
 
-    if(currencyAPI.isNumberKey(e)){
+    if(currencyAPI.isNumberKey(amountTwo.value)){
         currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].text, select.options[select.selectedIndex].text, amountTwo.value, 'amountTwo');
     }else if(amountOne < 0){
         this.clearField();

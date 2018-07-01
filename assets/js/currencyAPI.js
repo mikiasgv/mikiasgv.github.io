@@ -12,6 +12,7 @@ class CurrencyAPI {
     init(){
         //initialize the db
         this.openDatabase();
+        //intialize both the currency select and the amount
         this.getCurrencyList();
     }
 
@@ -101,7 +102,7 @@ class CurrencyAPI {
     }
 
 
-    //get the list of currencies from the API asynchronously
+    //get the list of currencies from the API
     getCurrencyList(){
         //fetch the list of currencies
         fetch('https://free.currencyconverterapi.com/api/v5/currencies').then(response => {
@@ -139,17 +140,21 @@ class CurrencyAPI {
                 symbolTwo.innerText = 'EUR';
             });
 
+            //initialize the amount text boxes to USD and EUR
             this.queryAPI("USD", "EUR", "United States Dollar equals", "Euro", 1, "amountOne");
 
+            //add the all the currencies to the db
             this.addCurrenciesToDatabase(response);
 
         }).catch( error => {
             console.log('It looks like your are offline or have a bad network: '+ error);
-            this.showCurrenciesFromDatabase(); // get currencies from cache since user is offline.
+            // get currencies from db.
+            this.showCurrenciesFromDatabase();
         });
 
     }
 
+    //will save the rates for off-line use
     addCurrencyRatesToDatabase(rates){
         this.openDatabase().then(db => {
             if (!db) return;
@@ -164,8 +169,9 @@ class CurrencyAPI {
         }).catch(error => console.log('Something went wrong: '+ error));
     }
 
+    //will show the conversion off-line
     showCurrencyRatesFromDatabase(currency_one, currency_two, textOne, textTwo, amountOne, indicator){
-        console.log(currency_one + '--' + currency_two + '--' + textOne, textTwo + '--' + amountOne + '--' + indicator);
+        //console.log(currency_one + '--' + currency_two + '--' + textOne, textTwo + '--' + amountOne + '--' + indicator);
         //get the first price box
         const amountOneEle = document.getElementById('amount-one');
         //get the secon price box
@@ -219,10 +225,10 @@ class CurrencyAPI {
 
     }
 
-
+    //get the exchange rate from the API
     queryAPI(currency_one, currency_two, textOne, textTwo, amountOne, indicator){
         //query the API aycly
-        console.log(currency_one + '--' + currency_two + '--' + textOne, textTwo + '--' + amountOne + '--' + indicator + 'main');
+        //console.log(currency_one + '--' + currency_two + '--' + textOne, textTwo + '--' + amountOne + '--' + indicator + 'main');
         fetch(`https://free.currencyconverterapi.com/api/v5/convert?q=${currency_one}_${currency_two},
         ${currency_two}_${currency_one}`).then(response => {
             return response.json();
@@ -270,18 +276,14 @@ class CurrencyAPI {
 
         }).catch( error => {
             console.log('It looks like your are offline or have a bad network: '+ error);
-            this.showCurrencyRatesFromDatabase(currency_one, currency_two, textOne, textTwo, amountOne, indicator); // get currencies from cache since user is offline.
+            this.showCurrencyRatesFromDatabase(currency_one, currency_two, textOne, textTwo, amountOne, indicator); // get rates from db.
         });
     }
 
     //check if the input is only number
     isNumberKey(evt)
     {
-        const charCode = (evt.which) ? evt.which : event.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-
-        return true;
+        return !isNaN(parseFloat(n)) && isFinite(n);
     }
 
     showUpdateUI(message){
