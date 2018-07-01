@@ -69,7 +69,7 @@ class CurrencyAPI {
                 .objectStore('currencies').index('id');
 
             return index.getAll().then( currencies => {
-                for(currency of currencies){
+                for(let currency of currencies){
                     //console.log(cryptoCurrencies[currency]);
                     //create option element dynamically
                     const option = document.createElement('option');
@@ -179,7 +179,7 @@ class CurrencyAPI {
                 .objectStore('rates').index('rates');
 
             return index.getAll().then( rates => {
-                for(rate of rates){
+                for(let rate of rates){
                     if(rate.id == `${currency_one}_${currency_two}`){
 
                         if(indicator == 'amountOne'){
