@@ -165,6 +165,7 @@ class CurrencyAPI {
     }
 
     showCurrencyRatesFromDatabase(currency_one, currency_two, textOne, textTwo, amountOne, indicator){
+        console.log(currency_one + '--' + currency_two + '--' + textOne, textTwo + '--' + amountOne + '--' + indicator);
         //get the first price box
         const amountOneEle = document.getElementById('amount-one');
         //get the secon price box
@@ -221,6 +222,7 @@ class CurrencyAPI {
 
     queryAPI(currency_one, currency_two, textOne, textTwo, amountOne, indicator){
         //query the API aycly
+        console.log(currency_one + '--' + currency_two + '--' + textOne, textTwo + '--' + amountOne + '--' + indicator + 'main');
         fetch(`https://free.currencyconverterapi.com/api/v5/convert?q=${currency_one}_${currency_two},
         ${currency_two}_${currency_one}`).then(response => {
             return response.json();
