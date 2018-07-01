@@ -1,21 +1,21 @@
 /**
  * Created by mikigv on 6/26/2018.
  */
-var staticCacheName = 'mikiasgv-v5';
+var staticCacheName = 'mikiasgv-v6';
 //dddddsdsd
 self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(staticCacheName).then(function(cache) {
             return cache.addAll([
-                '/',
+                './',
                 './index.html',
                 './assets/css/main.css',
                 './assets/js/currencyAPI.js',
                 './assets/js/view.js',
                 './assets/js/main.js',
                 './assets/image/bg1.png',
-                './https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css',
-                './https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+                'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css',
+                'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
             ]);
         })
     );
