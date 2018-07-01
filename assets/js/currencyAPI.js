@@ -141,7 +141,7 @@ class CurrencyAPI {
 
             this.queryAPI("USD", "EUR", "United States Dollar equals", "Euro", 1, "amountOne");
 
-            this.addCurrenciesToDatabase(currencies);
+            this.addCurrenciesToDatabase(response);
 
         }).catch( error => {
             console.log('It looks like your are offline or have a bad network: '+ error);
