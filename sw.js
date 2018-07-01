@@ -11,7 +11,6 @@ self.addEventListener('install', (event) => {
                 './index.html',
                 './assets/css/main.css',
                 './assets/js/currencyAPI.js',
-                './assets/js/view.js',
                 './assets/js/main.js',
                 './assets/image/bg1.png',
                 './assets/image/favicon-16x16.png',
