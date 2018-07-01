@@ -70,7 +70,7 @@ if ('serviceWorker' in navigator) {
 
 function updateReady(worker){
 
-    view.showUpdateUI('New version available');
+    currencyAPI.showUpdateUI('New version available');
 
     const updateMessage = document.querySelector('#update-message');
 
