@@ -1,7 +1,7 @@
 /**
  * Created by mikigv on 6/26/2018.
  */
-var staticCacheName = 'curr-conv-v9';
+var staticCacheName = 'curr-conv-v10';
 //dddddsdsd
 self.addEventListener('install', function(event) {
     event.waitUntil(
@@ -14,6 +14,7 @@ self.addEventListener('install', function(event) {
                 './assets/js/view.js',
                 './assets/js/main.js',
                 './assets/image/bg1.png',
+                './assets/image/favicon-16x16.png',
                 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css',
                 'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
             ]);

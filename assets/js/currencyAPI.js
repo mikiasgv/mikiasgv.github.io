@@ -94,6 +94,8 @@ class CurrencyAPI {
                     this.queryAPI("USD", "EUR", "United States Dollar equals", "Euro", 1, "amountOne");
                 }
 
+            }).catch( error => {
+                console.log('No currency was found in the database: ');
             });
         });
     }
@@ -198,6 +200,8 @@ class CurrencyAPI {
                     }
                 }
 
+            }).catch( error => {
+                console.log('No rate was found in the database: ');
             });
         });
 
