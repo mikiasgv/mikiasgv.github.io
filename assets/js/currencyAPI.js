@@ -249,6 +249,17 @@ class CurrencyAPI {
                     descriptionOne.innerText = `${amountOneEle.value} ${textOne}`;
                     descriptionTwo.innerText = `${amountTwoEle.value} ${textTwo}`;
 
+                }else if(indicator == 'selectOne'){
+                    amountOneEle.value = amountOne;
+                    amountTwoEle.value = (amountOne) * (rate.val).toFixed(2);
+                    descriptionOne.innerText = `${amountOneEle.value} ${textOne}`;
+                    descriptionTwo.innerText = `${amountTwoEle.value} ${textTwo}`;
+
+                }else if(indicator == 'selectTwo'){
+                    amountOneEle.value = amountOne;
+                    amountTwoEle.value = (amountOne) * (rate.val).toFixed(2);
+                    descriptionOne.innerText = `${amountOneEle.value} ${textOne}`;
+                    descriptionTwo.innerText = `${amountTwoEle.value} ${textTwo}`;
                 }
             });
 

@@ -1,7 +1,7 @@
 /**
  * Created by mikigv on 6/26/2018.
  */
-var staticCacheName = 'curr-conv-v11';
+var staticCacheName = 'curr-conv-v12';
 //dddddsdsd
 self.addEventListener('install', function(event) {
     event.waitUntil(
