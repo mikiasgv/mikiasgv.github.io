@@ -281,7 +281,7 @@ class CurrencyAPI {
     }
 
     //check if the input is only number
-    isNumberKey(evt)
+    isNumberKey(n)
     {
         return !isNaN(parseFloat(n)) && isFinite(n);
     }
