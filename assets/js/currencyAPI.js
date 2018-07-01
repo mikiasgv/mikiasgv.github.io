@@ -12,6 +12,7 @@ class CurrencyAPI {
     init(){
         //initialize the db
         this.openDatabase();
+        this.getCurrencyList();
     }
 
     openDatabase() {
@@ -38,115 +39,211 @@ class CurrencyAPI {
         });
     }
 
+    addCurrenciesToDatabase(currencies) {
+        this.openDatabase().then(db => {
+            if (!db) return;
 
-    //get the list of currencies from the API asynchronously
-    async getCurrencyList(){
-        //fetch the list of currencies asynclly
-        const url = await fetch('https://free.currencyconverterapi.com/api/v5/currencies');
+            const tx = db.transaction('currencies', 'readwrite');
+            const store = tx.objectStore('currencies');
 
-        //converting the list to json
-        //const currencies = await url.json();
-
-        if (url.ok) {
-            const currencies = await url.json();
-            let currencyArr = [];
             Object.values(currencies.results).forEach((currency) => {
-                currencyArr.push(currency);
+                store.put(currency);
             });
 
-            //add currencies to the db
-            this.openDatabase().then((db) => {
-                if (!db) return;
-
-                const tx = db.transaction('currencies', 'readwrite');
-                const store = tx.objectStore('currencies');
-                Object.values(currencies.results).forEach((currency) => {
-                    store.put(currency);
-                });
-
-            });
-
-            return {//return the concerted list
-
-                currencyArr
-            };
-
-        } else {
-            throw Error(url.statusText);
-        }
-
+        }).catch(error => console.log('Something went wrong: '+ error));
     }
 
-    getCurrenciesFromDB(){
-        let checkArr = [];
-        this.openDatabase().then(function(db) {
-            const index = db.transaction('currencies')
+    showCurrenciesFromDatabase() {
+        //const currencies = data;
+        //get the first select component from the UI to populate it with the currency list
+        const select = document.getElementById('currency-one');
+
+        //get the second select component from the UI to populate it with the currency list
+        const selectTwo = document.getElementById('currency-two');
+
+        return this.openDatabase().then( db => {
+
+            if (!db) return;
+
+            let index = db.transaction('currencies')
                 .objectStore('currencies').index('id');
 
-            checkArr.push(index.getAll());
+            return index.getAll().then( currencies => {
+                for(currency of currencies){
+                    //console.log(cryptoCurrencies[currency]);
+                    //create option element dynamically
+                    const option = document.createElement('option');
+                    const optionTwo = document.createElement('option');
+                    //this will add a value to the created option like: USD, GPB, BIR...
+                    option.value = currency.id;
+                    optionTwo.value = currency.id;
+                    //this will add a full name of the currency to the created option
+                    option.appendChild(document.createTextNode(currency.currencyName));
+                    optionTwo.appendChild(document.createTextNode(currency.currencyName));
+                    //Finally append the created element to the select element
+                    select.appendChild(option);
+                    selectTwo.appendChild(optionTwo);
+                    //Set USD the default currency for the select one
+                    select.options[select.selectedIndex].value="USD";
+                    selectTwo.options[selectTwo.selectedIndex].value="EUR";
+                    select.options[select.selectedIndex].text="United States Dollar";
+                    selectTwo.options[selectTwo.selectedIndex].text="Euro";
+                    symbolOne.innerText = "USD";
+                    symbolTwo.innerText = 'EUR';
 
-            if(checkArr.length){
-                return index.getAll();
-            }
+                    this.queryAPI("USD", "EUR", "United States Dollar equals", "Euro", 1, "amountOne");
+                }
+
+            });
+        });
+    }
+
+
+    //get the list of currencies from the API asynchronously
+    getCurrencyList(){
+        //fetch the list of currencies
+        fetch('https://free.currencyconverterapi.com/api/v5/currencies').then(response => {
+            return response.json();
+        }).then(response => {
+
+            //const currencies = data;
+            //get the first select component from the UI to populate it with the currency list
+            const select = document.getElementById('currency-one');
+
+            //get the second select component from the UI to populate it with the currency list
+            const selectTwo = document.getElementById('currency-two');
+
+            //Iterate through the returned list
+            Object.values(response.results).forEach((currency) => {
+                //console.log(cryptoCurrencies[currency]);
+                //create option element dynamically
+                const option = document.createElement('option');
+                const optionTwo = document.createElement('option');
+                //this will add a value to the created option like: USD, GPB, BIR...
+                option.value = currency.id;
+                optionTwo.value = currency.id;
+                //this will add a full name of the currency to the created option
+                option.appendChild(document.createTextNode(currency.currencyName));
+                optionTwo.appendChild(document.createTextNode(currency.currencyName));
+                //Finally append the created element to the select element
+                select.appendChild(option);
+                selectTwo.appendChild(optionTwo);
+                //Set USD the default currency for the select one
+                select.options[select.selectedIndex].value="USD";
+                selectTwo.options[selectTwo.selectedIndex].value="EUR";
+                select.options[select.selectedIndex].text="United States Dollar";
+                selectTwo.options[selectTwo.selectedIndex].text="Euro";
+                symbolOne.innerText = "USD";
+                symbolTwo.innerText = 'EUR';
+
+                this.queryAPI("USD", "EUR", "United States Dollar equals", "Euro", 1, "amountOne");
+            });
+
+            this.addCurrenciesToDatabase(currencies);
+
+        }).catch( error => {
+            console.log('It looks like your are offline or have a bad network: '+ error);
+            this.showCurrenciesFromDatabase(); // get currencies from cache since user is offline.
         });
 
-        //console.log('form API')
-        return this.getCurrencyList();
     }
 
-    async queryAPI(currency_one, currency_two){
-        //query the API aycly
-        const url = await fetch(`https://free.currencyconverterapi.com/api/v5/convert?q=${currency_one}_${currency_two},
-        ${currency_two}_${currency_one}`);
+    addCurrencyRatesToDatabase(rates){
+        this.openDatabase().then(db => {
+            if (!db) return;
 
-        if (url.ok) {
-            //converting the list to json
-            const conversonResult = await url.json();
-            let exchangeArr = [];
-            Object.values(conversonResult.results).forEach((rate) => {
-                exchangeArr.push(rate);
+            const tx = db.transaction('rates', 'readwrite');
+            const store = tx.objectStore('rates');
+
+            Object.values(rates.results).forEach((rate) => {
+                store.put(rate);
             });
 
-            //add currencies to the db
-            this.openDatabase().then((db) => {
-                if (!db) return;
-
-                const tx = db.transaction('rates', 'readwrite');
-                const store = tx.objectStore('rates');
-                Object.values(conversonResult.results).forEach((rate) => {
-                    store.put(rate);
-                });
-
-            });
-
-            return {
-                exchangeArr
-            };
-
-        } else {
-            throw Error(url.statusText);
-        }
-
+        }).catch(error => console.log('Something went wrong: '+ error));
     }
 
-    queryAPIFromDB(currency_one, currency_two){
-        let checkArr = [];
-        this.openDatabase().then((db) => {
-            const index = db.transaction('rates')
+    showCurrencyRatesFromDatabase(currency_one, currency_two, textOne, textTwo, amountOne, indicator){
+        //get the first price box
+        const amountOneEle = document.getElementById('amount-one');
+        //get the secon price box
+        const amountTwoEle = document.getElementById('amount-two');
+
+        const descriptionOne = document.getElementById('currency-info-one');
+        const descriptionTwo = document.getElementById('currency-info-two');
+
+        return this.openDatabase().then( db => {
+
+            if (!db) return;
+
+            let index = db.transaction('rates')
                 .objectStore('rates').index('rates');
 
-            checkArr.push(index.getAll());
+            return index.getAll().then( rates => {
+                for(rate of rates){
+                    if(rate.id == `${currency_one}_${currency_two}`){
 
-            if(checkArr.length){
-                index.getAll().then(data => {
-                    if(data.id == (currency_one + '_' + currency_two)){
-                        return data;
+                        if(indicator == 'amountOne'){
+                            amountOneEle.value = amountOne;
+                            amountTwoEle.value = (amountOne) * (rate.val).toFixed(2);
+                            descriptionOne.innerText = `${amountOneEle.value} ${textOne}`;
+                            descriptionTwo.innerText = `${amountTwoEle.value} ${textTwo}`;
+
+                        }else if(indicator == 'amountTwo'){
+                            amountTwoEle.value = amountOne;
+                            amountOneEle.value = (amountOne) * (rate.val).toFixed(2);
+                            descriptionOne.innerText = `${amountOneEle.value} ${textOne}`;
+                            descriptionTwo.innerText = `${amountTwoEle.value} ${textTwo}`;
+
+                        }
                     }
-                });
-            }
+                }
+
+            });
         });
 
-        return this.queryAPI(currency_one, currency_two);
+    }
+
+
+    queryAPI(currency_one, currency_two, textOne, textTwo, amountOne, indicator){
+        //query the API aycly
+        fetch(`https://free.currencyconverterapi.com/api/v5/convert?q=${currency_one}_${currency_two},
+        ${currency_two}_${currency_one}`).then(response => {
+            return response.json();
+        }).then(response => {
+
+            //get the first price box
+            const amountOneEle = document.getElementById('amount-one');
+            //get the secon price box
+            const amountTwoEle = document.getElementById('amount-two');
+
+            const descriptionOne = document.getElementById('currency-info-one');
+            const descriptionTwo = document.getElementById('currency-info-two');
+
+
+            Object.values(response.results).forEach((rate) => {
+
+                if(indicator == 'amountOne'){
+                    amountOneEle.value = amountOne;
+                    amountTwoEle.value = (amountOne) * (rate.val).toFixed(2);
+                    descriptionOne.innerText = `${amountOneEle.value} ${textOne}`;
+                    descriptionTwo.innerText = `${amountTwoEle.value} ${textTwo}`;
+
+                }else if(indicator == 'amountTwo'){
+                    amountTwoEle.value = amountOne;
+                    amountOneEle.value = (amountOne) * (rate.val).toFixed(2);
+                    descriptionOne.innerText = `${amountOneEle.value} ${textOne}`;
+                    descriptionTwo.innerText = `${amountTwoEle.value} ${textTwo}`;
+
+                }
+            });
+
+            this.addCurrencyRatesToDatabase(response);
+
+
+        }).catch( error => {
+            console.log('It looks like your are offline or have a bad network: '+ error);
+            this.showCurrencyRatesFromDatabase(currency_one, currency_two, textOne, textTwo, amountOne, indicator); // get currencies from cache since user is offline.
+        });
     }
 
     //check if the input is only number
@@ -157,5 +254,23 @@ class CurrencyAPI {
             return false;
 
         return true;
+    }
+
+    showUpdateUI(message){
+        let htmlTemplate = '';
+
+        htmlTemplate += `
+                <div class="card update-indicator" style="width: 18rem;">
+                   <div class="card-body">
+                       <h5 class="card-title">${message}</h5>
+                       <button id="btn-refresh" class="btn btn-primary">Refresh</button>
+                       <button id="btn-cancel" class="btn btn-primary">Cancel</button>
+                   </div>
+               </div>
+            `;
+
+        const updateMessage = document.querySelector('#update-message');
+
+        updateMessage.innerHTML = htmlTemplate;
     }
 }

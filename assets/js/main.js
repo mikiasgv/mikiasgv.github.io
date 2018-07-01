@@ -5,9 +5,6 @@
 //instantiate the model class
 const currencyAPI = new CurrencyAPI();
 
-//instantiate the view class
-const view = new View();
-
 //The first price text box
 const amountOne = document.getElementById('amount-one');
 //The second price text box
@@ -99,17 +96,8 @@ amountOne.addEventListener('keyup', (e) => {
     e.preventDefault();
 
     if(currencyAPI.isNumberKey(e)){
-        currencyAPI.queryAPIFromDB(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value)
-            .then(data => {
-                if(typeof data === 'object'){
-                    data = data.exchangeArr;
-                }
-                data.forEach(function (result) {
-                    amountTwo.value = view.fixToTwo(result.val * (amountOne.value));
-                    descriptionOne.innerText = `${amountOne.value} ${select.options[select.selectedIndex].text} equals`;
-                    descriptionTwo.innerText = `${amountTwo.value} ${selectTwo.options[selectTwo.selectedIndex].text}`;
-                });
-            });
+        currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value,
+            select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.value, 'amountOne');
     }else if(amountOne < 0){
         this.clearField();
     }else{
@@ -124,17 +112,7 @@ amountTwo.addEventListener('keyup', (e) => {
     e.preventDefault();
 
     if(currencyAPI.isNumberKey(e)){
-        currencyAPI.queryAPIFromDB(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value)
-            .then(data => {
-                if(typeof data === 'object'){
-                    data = data.exchangeArr;
-                }
-                data.forEach(function (result) {
-                    amountOne.value = view.fixToTwo(result.val * (amountTwo.value));
-                    descriptionOne.innerText = `${amountTwo.value} ${selectTwo.options[selectTwo.selectedIndex].text} equals`;
-                    descriptionTwo.innerText = `${amountOne.value} ${select.options[select.selectedIndex].text}`;
-                });
-            });
+        currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].text, select.options[select.selectedIndex].text, amountTwo, 'amountTwo');
     }else if(amountOne < 0){
         this.clearField();
     }else{
@@ -181,17 +159,8 @@ select.addEventListener('change', (e) => {
     symbolOne.innerText = select.options[select.selectedIndex].value;
     symbolTwo.innerText = selectTwo.options[selectTwo.selectedIndex].value;
 
-    currencyAPI.queryAPIFromDB(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value)
-        .then(data => {
-            if(typeof data === 'object'){
-                data = data.exchangeArr;
-            }
-            data.forEach(function (result) {
-                amountTwo.value = view.fixToTwo(result.val * (amountOne.value));
-                descriptionOne.innerText = `${amountOne.value} ${select.options[select.selectedIndex].text} equals`;
-                descriptionTwo.innerText = `${amountTwo.value} ${selectTwo.options[selectTwo.selectedIndex].text}`;
-            });
-        });
+    currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value,
+        select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.text, 'amountOne');
 });
 
 //the below event will capture the values of the first selectbox before it is changed
@@ -223,17 +192,8 @@ selectTwo.addEventListener('change', (e) => {
     symbolOne.innerText = select.options[select.selectedIndex].value;
     symbolTwo.innerText = selectTwo.options[selectTwo.selectedIndex].value;
 
-    currencyAPI.queryAPIFromDB(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value)
-        .then(data => {
-            if(typeof data === 'object'){
-                data = data.exchangeArr;
-            }
-            data.forEach(function (result) {
-                amountTwo.value = view.fixToTwo(result.val * (amountOne.value));
-                descriptionOne.innerText = `${amountOne.value} ${select.options[select.selectedIndex].text} equals`;
-                descriptionTwo.innerText = `${amountTwo.value} ${selectTwo.options[selectTwo.selectedIndex].text}`;
-            });
-        });
+    currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value,
+        select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.text, 'amountTwo');
 });
 
 function clearField(){
