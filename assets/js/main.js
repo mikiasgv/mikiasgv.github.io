@@ -112,7 +112,7 @@ amountTwo.addEventListener('keyup', (e) => {
     e.preventDefault();
 
     if(currencyAPI.isNumberKey(e)){
-        currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].text, select.options[select.selectedIndex].text, amountTwo, 'amountTwo');
+        currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].text, select.options[select.selectedIndex].text, amountTwo.value, 'amountTwo');
     }else if(amountOne < 0){
         this.clearField();
     }else{
@@ -160,7 +160,7 @@ select.addEventListener('change', (e) => {
     symbolTwo.innerText = selectTwo.options[selectTwo.selectedIndex].value;
 
     currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value,
-        select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.text, 'amountOne');
+        select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.value, 'amountOne');
 });
 
 //the below event will capture the values of the first selectbox before it is changed
@@ -193,7 +193,7 @@ selectTwo.addEventListener('change', (e) => {
     symbolTwo.innerText = selectTwo.options[selectTwo.selectedIndex].value;
 
     currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value,
-        select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.text, 'amountTwo');
+        select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.value, 'amountTwo');
 });
 
 function clearField(){
