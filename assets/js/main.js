@@ -197,8 +197,8 @@ selectTwo.addEventListener('change', (e) => {
 });
 
 function clearField(){
-    amountOne.value = 0;
-    amountTwo.value = 0;
+    amountOne.value = '';
+    amountTwo.value = '';
     descriptionOne.innerText = '';
     descriptionTwo.innerText = '';
 }
