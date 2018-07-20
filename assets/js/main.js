@@ -95,7 +95,7 @@ function updateReady(worker){
 amountOne.addEventListener('keyup', (e) => {
     e.preventDefault();
     
-    timeout = setTimeout(function () {
+    //timeout = setTimeout(function () {
         if(currencyAPI.isNumberKey(amountOne.value)){
             currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value,
                 select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.value, 'amountOne');
@@ -104,7 +104,7 @@ amountOne.addEventListener('keyup', (e) => {
         }else{
             this.clearField();
         }
-    }, 500);
+    //}, 500);
 });
 
 //whenever the value of amountTwo changed this will trigger
@@ -112,7 +112,7 @@ amountOne.addEventListener('keyup', (e) => {
 amountTwo.addEventListener('keyup', (e) => {
     e.preventDefault();
     
-    timeout = setTimeout(function () {
+    //timeout = setTimeout(function () {
         if(currencyAPI.isNumberKey(amountTwo.value)){
             currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].text, select.options[select.selectedIndex].text, amountTwo.value, 'amountTwo');
         }else if(amountOne < 0){
@@ -120,7 +120,7 @@ amountTwo.addEventListener('keyup', (e) => {
         }else{
             this.clearField();
         }
-    }, 500);
+    //}, 500);
 });
 
 //the below event will capture the values of the first selectbox before it is changed
