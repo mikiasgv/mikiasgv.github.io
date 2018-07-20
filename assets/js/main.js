@@ -113,11 +113,10 @@ amountTwo.addEventListener('keyup', (e) => {
     e.preventDefault();
     
     //timeout = setTimeout(function () {
-        //if(currencyAPI.isNumberKey(amountTwo.value)){
-        if(amountTwo.value >= 0){
+        if(currencyAPI.isNumberKey(amountTwo.value)){
             currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].text, select.options[select.selectedIndex].text, amountTwo.value, 'amountTwo');
-        //}else if(amountOne < 0){
-            //this.clearField();
+        }else if(amountOne < 0){
+            this.clearField();
         }else{
             this.clearField();
         }
