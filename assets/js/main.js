@@ -94,33 +94,33 @@ function updateReady(worker){
 //get the exchange amount and set it to amountTwo
 amountOne.addEventListener('keyup', (e) => {
     e.preventDefault();
-
-    if(currencyAPI.isNumberKey(amountOne.value)){
-        currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value,
-            select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.value, 'amountOne');
-    }else if(amountOne < 0){
-        this.clearField();
-    }else{
-        this.clearField();
-    }
-
+    
+    timeout = setTimeout(function () {
+        if(currencyAPI.isNumberKey(amountOne.value)){
+            currencyAPI.queryAPI(select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].value,
+                select.options[select.selectedIndex].text, selectTwo.options[selectTwo.selectedIndex].text, amountOne.value, 'amountOne');
+        }else if(amountOne < 0){
+            this.clearField();
+        }else{
+            this.clearField();
+        }
+    }, 500);
 });
 
 //whenever the value of amountTwo changed this will trigger
 //get the exchange amount and set it to amountOne
 amountTwo.addEventListener('keyup', (e) => {
     e.preventDefault();
-
-    if(currencyAPI.isNumberKey(amountTwo.value)){
-        currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].text, select.options[select.selectedIndex].text, amountTwo.value, 'amountTwo');
-    }else if(amountOne < 0){
-        this.clearField();
-    }else{
-        this.clearField();
-    }
-
-
-
+    
+    timeout = setTimeout(function () {
+        if(currencyAPI.isNumberKey(amountTwo.value)){
+            currencyAPI.queryAPI(selectTwo.options[selectTwo.selectedIndex].value, select.options[select.selectedIndex].value, selectTwo.options[selectTwo.selectedIndex].text, select.options[select.selectedIndex].text, amountTwo.value, 'amountTwo');
+        }else if(amountOne < 0){
+            this.clearField();
+        }else{
+            this.clearField();
+        }
+    }, 500);
 });
 
 //the below event will capture the values of the first selectbox before it is changed
