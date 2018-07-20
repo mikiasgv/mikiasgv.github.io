@@ -92,7 +92,7 @@ function updateReady(worker){
 
 //whenever the value of amountOne changed this will trigger
 //get the exchange amount and set it to amountTwo
-amountOne.addEventListener('keydown', (e) => {
+amountOne.addEventListener('keyup', (e) => {
     e.preventDefault();
     
     //timeout = setTimeout(function () {
